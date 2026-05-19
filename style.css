@@ -1,46 +1,567 @@
+/* ============================
+   DAREMMUSIC — style.css
+   Mobile-first · Responsive completo
+   ============================ */
+
+:root {
+  --bg: #fdf7f4;
+  --bg-alt: #f5ece8;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --accent: #1a1a1a;
+  --pink: #e8c4b8;
+  --pink-mid: #c9897a;
+  --text: #1a1a1a;
+  --muted: rgba(26, 26, 26, 0.45);
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Lato", sans-serif;
+  --font-mono: "DM Mono", "Courier New", monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Espaciado que escala */
+  --section-pad-v: clamp(64px, 10vw, 120px);
+  --section-pad-h: clamp(20px, 5vw, 40px);
+}
+
+/* ── RESET ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0b;
-  color: white;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  /* Evita scroll horizontal en móvil */
+  width: 100%;
 }
 
-/* Header */
-header {
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── CANVAS FONDO ── */
+#canvas-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* ── TIPOGRAFÍA UTILIDAD ── */
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── ANIMACIONES ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.9s var(--ease) forwards;
+}
+.delay-1 {
+  animation-delay: 0.1s;
+}
+.delay-2 {
+  animation-delay: 0.3s;
+}
+.delay-3 {
+  animation-delay: 0.5s;
+}
+.delay-4 {
+  animation-delay: 0.7s;
+}
+.delay-5 {
+  animation-delay: 0.9s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hidden-section {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+}
+.hidden-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════
+   HERO
+════════════════════════════ */
+header#hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh; /* svh = mejor en móvil con barra de dirección */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 80px 20px;
-  background: linear-gradient(to bottom, #4c1d95, #0b0b0b);
+  padding: clamp(80px, 12vw, 120px) clamp(20px, 6vw, 48px) 80px;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse 85% 70% at 50% 38%,
+    #efcfc5 0%,
+    #fdf7f4 65%
+  );
 }
 
-h1 {
-  font-size: 50px;
-  margin: 0;
+header#hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--pink-mid),
+    transparent
+  );
 }
 
-p {
-  color: #bbb;
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 700px;
 }
 
-/* Botón */
-.btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #7c3aed;
-  color: white;
+.hero-label {
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+.hero-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  /* Evita que el parallax JS se salga del contenedor en móvil */
+  will-change: transform;
+}
+
+.hero-logo img {
+  width: clamp(220px, 65vw, 440px);
+  height: auto;
+  mix-blend-mode: multiply;
+  filter: contrast(1.08) saturate(0.95);
+  transition: transform 0.7s var(--ease);
+  /* Evita bordes pixelados al escalar */
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.hero-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  padding: 0 16px;
+}
+
+.btn-reveal {
+  margin-top: clamp(28px, 5vw, 44px);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--accent);
   border: none;
-  border-radius: 10px;
+  color: #fdf7f4;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  /* Mínimo 44px de alto para toque cómodo en móvil */
+  min-height: 44px;
+  padding: 12px clamp(20px, 5vw, 36px);
   cursor: pointer;
-  font-weight: bold;
+  transition:
+    background 0.3s,
+    gap 0.3s var(--ease),
+    transform 0.2s;
+  /* Evita que el texto se parta */
+  white-space: nowrap;
 }
 
-/* Secciones */
-.contenido {
-  padding: 50px 20px;
-  max-width: 900px;
-  margin: auto;
+.btn-reveal:hover,
+.btn-reveal:focus-visible {
+  background: var(--pink-mid);
+  gap: 20px;
+  transform: translateY(-2px);
 }
 
-/* Spotify oculto */
-.oculto {
+.btn-reveal:active {
+  transform: translateY(0);
+}
+
+.btn-arrow {
+  transition: transform 0.4s var(--ease);
+  display: inline-block;
+}
+.btn-reveal:hover .btn-arrow {
+  transform: translateY(4px);
+}
+
+.hero-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--pink-mid));
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  right: clamp(16px, 4vw, 40px);
+  writing-mode: vertical-rl;
+  letter-spacing: 0.2em;
+  /* Oculto en pantallas pequeñas */
   display: none;
+}
+
+/* ════════════════════════════
+   SECCIONES
+════════════════════════════ */
+.section {
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--section-pad-v) var(--section-pad-h);
+}
+
+.section-label {
+  margin-bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pink-mid);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  /* clamp: mínimo 2rem en móvil, óptimo en tablet, máximo en escritorio */
+  font-size: clamp(2rem, 6vw, 4.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: clamp(28px, 5vw, 48px);
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--pink-mid);
+}
+
+/* ════════════════════════════
+   SPOTIFY
+════════════════════════════ */
+.spotify-wrapper {
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 8px 40px rgba(201, 137, 122, 0.1);
+  position: relative;
+  /* Altura adaptativa */
+  border-radius: 4px;
+}
+
+.spotify-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--pink-mid),
+    transparent
+  );
+  z-index: 1;
+}
+
+.spotify-wrapper iframe {
+  display: block;
+  width: 100%;
+  /* Altura que escala bien en móvil */
+  height: clamp(200px, 50vw, 352px);
+  border: none;
+}
+
+/* ════════════════════════════
+   SOBRE MÍ
+════════════════════════════ */
+.sobre-grid {
+  display: grid;
+  /* Por defecto (móvil): una columna */
+  grid-template-columns: 1fr;
+  gap: clamp(32px, 6vw, 80px);
+  align-items: start;
+}
+
+.sobre-body {
+  font-size: clamp(1rem, 2.2vw, 1.08rem);
+  line-height: 1.85;
+  color: var(--muted);
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.visual-block {
+  border: 1px solid var(--border);
+  padding: clamp(24px, 4vw, 40px) clamp(20px, 4vw, 32px);
+  background: var(--surface);
+  box-shadow: 0 4px 24px rgba(201, 137, 122, 0.08);
+}
+
+.visual-stat {
+  padding: clamp(16px, 3vw, 24px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
+  color: var(--pink-mid);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.visual-divider {
+  height: 1px;
+  background: var(--border);
+}
+
+/* ════════════════════════════
+   CONTACTO
+════════════════════════════ */
+.contacto-grid {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.contacto-item {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3vw, 24px);
+  padding: clamp(20px, 4vw, 28px) 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: padding-left 0.4s var(--ease);
+  position: relative;
+  overflow: hidden;
+  /* Área de toque mínima en móvil */
+  min-height: 64px;
+}
+
+.contacto-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(to right, rgba(201, 137, 122, 0.1), transparent);
+  transition: width 0.4s var(--ease);
+}
+
+.contacto-item:hover::before {
+  width: 100%;
+}
+.contacto-item:hover {
+  padding-left: 14px;
+}
+.contacto-item > * {
+  position: relative;
+  z-index: 1;
+}
+
+.contacto-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px; /* evita que se comprima en móvil */
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.contacto-item:hover .contacto-icon {
+  border-color: var(--pink-mid);
+  background: rgba(201, 137, 122, 0.08);
+}
+
+.contacto-icon svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.contacto-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* Evita que el texto largo desborde */
+  min-width: 0;
+}
+
+.contacto-label {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contacto-value {
+  font-family: var(--font-serif);
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  /* Texto largo que no desborda */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contacto-arrow {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--muted);
+  transition:
+    color 0.3s,
+    transform 0.3s var(--ease);
+  flex-shrink: 0;
+}
+
+.contacto-item:hover .contacto-arrow {
+  color: var(--pink-mid);
+  transform: translateX(6px);
+}
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+.footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: clamp(24px, 4vw, 32px) clamp(20px, 5vw, 40px);
+  background: var(--bg-alt);
+}
+
+.footer-inner {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Se rompe en líneas en móvil */
+  gap: 12px 16px;
+}
+
+.footer-logo {
+  height: 24px;
+  width: auto;
+  opacity: 0.65;
+  mix-blend-mode: multiply;
+}
+
+.footer-copy {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+}
+
+.footer-divider {
+  color: rgba(0, 0, 0, 0.15);
+}
+
+/* ════════════════════════════
+   TABLET  ≥ 600px
+════════════════════════════ */
+@media (min-width: 600px) {
+  .scroll-hint {
+    display: block;
+  }
+}
+
+/* ════════════════════════════
+   ESCRITORIO  ≥ 860px
+════════════════════════════ */
+@media (min-width: 860px) {
+  /* Dos columnas en "Sobre mí" solo en escritorio */
+  .sobre-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Parallax solo en escritorio (JS lo detecta también) */
+  .hero-logo img:hover {
+    transform: scale(1.025);
+  }
+}
+
+/* ════════════════════════════
+   ACCESIBILIDAD: movimiento reducido
+════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .hidden-section {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .btn-reveal,
+  .contacto-item,
+  .contacto-arrow {
+    transition: none;
+  }
 }

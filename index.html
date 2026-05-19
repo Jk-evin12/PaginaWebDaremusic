@@ -1,58 +1,192 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dario Benítez - Música</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daremmusic — Dario Benítez</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:wght@300;400&family=Lato:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
+    <!-- Fondo animado con partículas -->
+    <canvas id="canvas-bg"></canvas>
 
-  <header>
-    <h1> Daremmusic </h1>
-    <p> Música hecha con alma desde Madrid</p>
+    <!-- HERO -->
+    <header id="hero">
+      <div class="hero-inner">
+        <div class="hero-label mono fade-in delay-1">
+          Madrid · Música · Alma
+        </div>
+        <div class="hero-logo fade-in delay-2">
+          <img src="logo.png" alt="Daremmusic" />
+        </div>
+        <p class="hero-sub fade-in delay-3">
+          Música hecha con alma desde Madrid
+        </p>
+        <button class="btn-reveal fade-in delay-4" id="btnVerMusica">
+          <span class="btn-text">Escuchar</span>
+          <span class="btn-arrow">↓</span>
+        </button>
+      </div>
 
-    <button class="btn" onclick="mostrarMusica()">Ver música</button>
-  </header>
+      <!-- Línea decorativa -->
+      <div class="hero-line fade-in delay-5"></div>
+      <div class="scroll-hint fade-in delay-5 mono">scroll</div>
+    </header>
 
-  <section class="contenido">
-    <h2>Sobre mí</h2>
-    <p>
-      Soy músico, cantante y multiinstrumentista. Creo música desde la emoción,
-      combinando voz, instrumentos y producción digital.
-    </p>
-  </section>
+    <!-- MÚSICA (Spotify) -->
+    <section id="musica" class="section section-music hidden-section">
+      <div class="section-label mono">01 — Música</div>
+      <h2 class="section-title">Escúchame en Spotify</h2>
+      <div class="spotify-wrapper" id="spotify">
+        <iframe
+          src="https://open.spotify.com/embed/artist/7KDmzNsLSdvitjUgZIofEE"
+          width="100%"
+          height="352"
+          frameborder="0"
+          allow="
+            autoplay;
+            clipboard-write;
+            encrypted-media;
+            fullscreen;
+            picture-in-picture;
+          "
+          loading="lazy"
+        >
+        </iframe>
+      </div>
+    </section>
 
-  <section class="contenido">
-    <h2>Música</h2>
-    
-    <div id="spotify" class="oculto">
-      <iframe
-        src="https://open.spotify.com/embed/artist/7KDmzNsLSdvitjUgZIofEE"
-        width="100%"
-        height="352"
-        frameborder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-      </iframe>
-    </div>
-  </section>
+    <!-- SOBRE MÍ -->
+    <section id="sobre" class="section section-sobre hidden-section">
+      <div class="section-label mono">02 — Artista</div>
+      <div class="sobre-grid">
+        <div class="sobre-text">
+          <h2 class="section-title">Sobre<br /><em>mí</em></h2>
+          <p class="sobre-body">
+            Soy músico, cantante y multiinstrumentista. Creo música desde la
+            emoción, combinando voz, instrumentos y producción digital.
+          </p>
+          <p class="sobre-body">
+            Cada canción es un viaje. Desde Madrid hacia cualquier rincón donde
+            la música pueda llegar.
+          </p>
+        </div>
+        <div class="sobre-visual">
+          <div class="visual-block">
+            <div class="visual-stat">
+              <span class="stat-num">MDR</span
+              ><span class="stat-label mono">Madrid</span>
+            </div>
+            <div class="visual-divider"></div>
+            <div class="visual-stat">
+              <span class="stat-num">∞</span
+              ><span class="stat-label mono">Canciones por venir</span>
+            </div>
+            <div class="visual-divider"></div>
+            <div class="visual-stat">
+              <span class="stat-num">100%</span
+              ><span class="stat-label mono">Hecho con alma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section class="contenido">
-    <h2>Contacto</h2>
-    <a href="https://www.instagram.com/daremmusic/" target="_blank" rel="noopener noreferrer">
-        <p>📱 Instagram</p>
-    </a>
-    <a href="darem.music@gmail.com>" target="_blank" rel="noopener noreferrer">
-        <p>📩 Correo Eléctronico </p>
+    <!-- CONTACTO -->
+    <section id="contacto" class="section section-contacto hidden-section">
+      <div class="section-label mono">03 — Contacto</div>
+      <h2 class="section-title">Hablemos</h2>
+      <div class="contacto-grid">
+        <a
+          href="https://www.instagram.com/daremmusic/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contacto-item"
+        >
+          <div class="contacto-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg>
+          </div>
+          <div class="contacto-info">
+            <span class="contacto-label mono">Instagram</span>
+            <span class="contacto-value">@daremmusic</span>
+          </div>
+          <span class="contacto-arrow">→</span>
         </a>
-    <a href="https://maps.app.goo.gl/fCV7Hca2k7Njxzs5A" target="_blank" rel="noopener noreferrer">
-    <p>📍 Localización </p>
-    </a>
-  </section>
 
+        <a href="mailto:darem.music@gmail.com" class="contacto-item">
+          <div class="contacto-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+          </div>
+          <div class="contacto-info">
+            <span class="contacto-label mono">Correo</span>
+            <span class="contacto-value">darem.music@gmail.com</span>
+          </div>
+          <span class="contacto-arrow">→</span>
+        </a>
 
-  <script src="app.js"></script>
+        <a
+          href="https://maps.app.goo.gl/fCV7Hca2k7Njxzs5A"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="contacto-item"
+        >
+          <div class="contacto-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+          </div>
+          <div class="contacto-info">
+            <span class="contacto-label mono">Ubicación</span>
+            <span class="contacto-value">Madrid, España</span>
+          </div>
+          <span class="contacto-arrow">→</span>
+        </a>
+      </div>
+    </section>
 
-</body>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <img src="logo.png" alt="Daremmusic" class="footer-logo" />
+        <span class="footer-divider">·</span>
+        <span class="footer-copy"
+          >© 2025 Daremmusic — Dario Benítez, Madrid</span
+        >
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
 </html>
